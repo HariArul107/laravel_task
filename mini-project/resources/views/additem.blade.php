@@ -126,6 +126,7 @@
         }
 
         .back-btn {
+            text-align: center;
             display: inline-block;
             margin-bottom: 20px;
             padding: 10px 18px;
@@ -158,7 +159,6 @@
 
     <!-- Form Container -->
     <div class="form-container">
-        <a href="/item" class="back-btn">← Back</a>
         <form action="/database_item" method="post">
             @csrf
             <label for="name">Select Category</label>
@@ -181,6 +181,9 @@
             <input type="number" id="prize" name="prize" required min="1" max="999999">
 
             <button type="submit">ADD ITEM</button>
+            <br>
+            <a href="/item" class="back-btn">Back</a>
+
         </form>
     </div>
 </body>

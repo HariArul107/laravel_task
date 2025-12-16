@@ -137,6 +137,7 @@
             border-radius: 6px;
             font-size: 16px;
             transition: 0.3s;
+            text-align: center;
         }
 
         .back-btn:hover {
@@ -160,7 +161,6 @@
 
     <!-- Form Container -->
     <div class="form-container">
-        <a href="/item" class="back-btn">← Back</a>
 
         <form action="/database-add" method="post">
             @csrf
@@ -172,6 +172,10 @@
             <textarea id="des" name="description" required></textarea>
 
             <button type="submit">ADD CATEGORY</button>
+            <br>
+            <a href="/item" class="back-btn"> Back</a>
+
+
         </form>
     </div>
 </body>

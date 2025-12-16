@@ -9,6 +9,7 @@ use Illuminate\Validation\Rule;
 use App\Models\loginuser;
 use App\Models\category;
 use App\Models\item;
+use App\Models\Purchase;
 
 class ListController extends Controller
 {
@@ -92,15 +93,17 @@ class ListController extends Controller
         return redirect('/item')->with('success', 'Category Added Successfully!');
     }
 
-    public function editcategory($id)
+    public function editcategory(Request $request, $id)
     {
-        $userId = session('user_id');
 
+        $userId = session('user_id');
         $category = category::where('category_id', $id)
             ->where('user_id', $userId)   // security check
             ->firstOrFail();
 
-        return view('edit_category', compact('category'));
+        $editable = $request->has('edit');
+
+        return view('edit_category', compact('category', 'editable'));
     }
 
     public function updatecategory(Request $request, $id)
@@ -137,22 +140,32 @@ class ListController extends Controller
             ->where('user_id', $userId)
             ->firstOrFail();
 
+        $itemCount = item::where('category_id', $id)->count();
+
+        if ($itemCount > 0) {
+            return redirect()->back()
+                ->with('success', 'Cannot delete this category because items are associated with it.');
+        }
+
         $category->delete();
 
         return redirect('/category')->with('success', 'Category Deleted Successfully!');
     }
 
-    public function edititem($id)
+    public function edititem(Request $request, $id)
     {
         $userId = session('user_id');
 
         $categories = category::where('user_id', $userId)->get();
 
+
         $item = item::where('item_id', $id)
             ->where('user_id', $userId)   // security check
             ->firstOrFail();
+        $editable = $request->has('edit');
 
-        return view('edit_item', compact('item'), compact('categories'));
+
+        return view('edit_item', compact('item'), compact('categories','editable'));
     }
     //updateitem
 
@@ -196,6 +209,15 @@ class ListController extends Controller
         $items = item::where('item_id', $id)
             ->where('user_id', $userId)
             ->firstOrFail();
+
+
+        $purchaseCount = Purchase::where('item_id', $id)->count();
+
+        if ($purchaseCount > 0) {
+            return redirect()->back()
+                ->with('success', 'Cannot delete this item because purchase are associated with it.');
+        }
+
         $items->delete();
         return redirect('/item')->with('success', 'item Deleted Successfully!');
     }

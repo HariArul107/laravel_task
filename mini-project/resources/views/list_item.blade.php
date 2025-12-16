@@ -154,9 +154,15 @@
     <div class="container">
         <h1>Items</h1>
         <div class="header-section">
-            <a href="/add_item">+ ADD NEW ITEM</a>
             <a href="/home">← Back</a>
+            <a href="/add_item">+ ADD NEW ITEM</a>
         </div>
+        
+        @if(session('success'))
+        <div style="color:green; text-align:center; margin-bottom:15px;">
+            {{ session('success') }}
+        </div>
+        @endif
 
         <table>
             <thead>
@@ -164,8 +170,9 @@
                     <td>Category Name</td>
                     <td>Item Name</td>
                     <td>Item Price</td>
-                    <td >edit</td>
+                    <td>edit</td>
                     <td>delete</td>
+                    <td>view</td>
                 </tr>
             </thead>
             <tbody>
@@ -175,13 +182,24 @@
                     <td>{{ $item->item_name }}</td>
                     <td>{{ $item->prize }}</td>
                     <td>
-                        <a href="/item/edit/{{ $item->item_id }}" title="Edit">
+                        <a href="/item/edit/{{ $item->item_id }}?edit=1" title="Edit">
                             ✏️
                         </a>
                     </td>
                     <td>
-                        <a href="/item/delete/{{ $item->item_id}}">
+                        @method('DELETE')
+                        <a href="/item/delete/{{ $item->item_id}}" onclick="return confirm('Are you sure?')" style="background:none;border:none;cursor:pointer;" title="Remove">
                             🗑️
+                        </a>
+                    </td>
+                    <td>
+                        <a href="/item/edit/{{ $item->item_id }}" title="Edit">
+                            <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24"
+                                viewBox="0 0 24 24" fill="none" stroke="currentColor"
+                                stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                                <path d="M1 12s4-8 11-8 11 8 11 8-4 8-11 8-11-8-11-8z" />
+                                <circle cx="12" cy="12" r="3" />
+                            </svg>
                         </a>
                     </td>
                 </tr>

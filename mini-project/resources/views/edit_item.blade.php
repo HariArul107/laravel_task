@@ -126,6 +126,7 @@
         }
 
         .back-btn {
+            text-align: center;
             display: inline-block;
             margin-bottom: 20px;
             padding: 10px 18px;
@@ -158,12 +159,11 @@
 
     <!-- Form Container -->
     <div class="form-container">
-        <a href="/item" class="back-btn">← Back</a>
         <form action="{{ url('/item/update/'.$item->item_id) }}" method="POST">
             @csrf
 
             <label for="name">Select Category</label>
-            <select id="name" name="c_name" required>
+            <select id="name" name="c_name" @if(!$editable) disabled @endif required>
                 <option value="">-- Select Category --</option>
                 @forelse($categories as $cat)
                 <option value="{{ $cat->category_name }}" {{ old('c_name', $item->category_name) == $cat->category_name ? 'selected' : '' }}>{{ $cat->category_name }}</option>
@@ -176,12 +176,21 @@
             @enderror
 
             <label for="item">Item Name</label>
-            <input type="text" id="item" name="item_name" value="{{ old('item_name', $item->item_name) }}" required>
+            <input type="text" id="item" name="item_name" value="{{ old('item_name', $item->item_name) }}"
+                @if(!$editable) disabled @endif required>
 
             <label for="prize">Prize</label>
-            <input type="number" id="prize" name="prize" value="{{ old('prize', $item->prize) }}" required min="1" max="999999">
-
+            <input type="number" id="prize" name="prize" value="{{ old('prize', $item->prize) }}"
+                @if(!$editable) disabled @endif required min="1" max="999999">
+            @if($editable)
             <button type="submit">EDIT ITEM</button>
+            <br>
+            <a href="/item" class="back-btn">Back</a>
+            @else
+            <br>
+            <a href="/item" class="back-btn">Back</a>
+
+            @endif
         </form>
     </div>
 </body>

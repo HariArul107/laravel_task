@@ -1,11 +1,10 @@
 <!DOCTYPE html>
-<html>
+<html lang="en">
 
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Edit Category</title>
-
+    <title>Add New Category</title>
     <style>
         body {
             margin: 0;
@@ -45,7 +44,7 @@
         }
 
         /* Page Title */
-        h2 {
+        h1 {
             text-align: center;
             margin-top: 40px;
             margin-bottom: 30px;
@@ -103,14 +102,8 @@
             resize: none;
         }
 
-        .button-group {
-            display: flex;
-            gap: 15px;
-            margin-top: 30px;
-        }
-
         button {
-            flex: 1;
+            margin-top: 30px;
             padding: 12px 28px;
             background: #007bff;
             color: white;
@@ -126,24 +119,6 @@
             background: #0056b3;
         }
 
-        .cancel-btn {
-            background: #6c757d;
-            text-decoration: none;
-            padding: 12px 28px;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            border-radius: 6px;
-            color: white;
-            font-weight: 600;
-            font-size: 16px;
-            transition: 0.3s;
-        }
-
-        .cancel-btn:hover {
-            background: #5a6268;
-        }
-
         .error {
             color: #dc3545;
             font-size: 14px;
@@ -154,6 +129,7 @@
 
         .back-btn {
             display: inline-block;
+            text-align: center;
             margin-bottom: 20px;
             padding: 10px 18px;
             background: #6c757d;
@@ -169,49 +145,75 @@
         }
     </style>
 </head>
+<!-- i                have   -->
+<!--  {{ session('user_id') }} -->
+<!-- {{ session('user_name') }} -->
 
 <body>
     <!-- Navbar -->
     <div class="navbar">
         <div class="username">Welcome {{ session('user_name') }}</div>
-        <div>
-            <a href="/category">Back</a>
-            <a href="/logout">Logout</a>
-        </div>
+        <a href="/logout">Logout</a>
     </div>
 
     <!-- Page Title -->
-    <h2>Edit Category</h2>
+    <h1>Add New Purchase</h1>
 
     <!-- Form Container -->
     <div class="form-container">
-        <form action="{{ url('/category/update/'.$category->category_id) }}" method="POST">
+        
+
+        <form action="/database-purchase" method="post">
+
+
             @csrf
 
-            <label for="category_name">Category Name</label>
-            <input type="text" id="category_name" name="category_name"
-                value="{{ old('category_name', $category->category_name) }}" @if(!$editable) disabled @endif required>
-            @error('category_name')
-            <span class="error">{{ $message }}</span>
-            @enderror
+            <label for="item_id">Select Item:</label>
+            <select name="item_id" id="item_id" required>
+                <option value="">-- Select Item --</option>
+                @foreach($items as $item)
+                <option value="{{ $item->item_id }}" data-price="{{ $item->prize }}">
+                    {{ $item->item_name }}
+                </option>
+                @endforeach
+            </select>
+            <br><br>
 
-            <label for="description">Description</label>
-            <textarea id="description" name="description" @if(!$editable) disabled @endif
-                required>{{ old('description', $category->category_description) }}</textarea>
-            @error('description')
-            <span class="error">{{ $message }}</span>
-            @enderror
-            @if($editable)
-            <div class="button-group">
-                <button type="submit">UPDATE</button>
-                <a href="/category" class="cancel-btn">CANCEL</a>
-            </div>
-            @else
-            <div class="button-group">
-                <a href="/category" class="cancel-btn">BACK</a>
-            </div>
-            @endif
+            <label for="price">Item Price:</label>
+            <input type="number" id="price" name="price" readonly>
+            <br><br>
 
+            <label for="quantity">Quantity:</label>
+            <input type="number" name="quantity" id="quantity" value="1" min="1"  max="9999" required>
+            <br><br>
+
+            <label for="total">Total Price:</label>
+            <input type="number" name="total" id="total" readonly>
+            <br><br>
+            <script>
+                const itemSelect = document.getElementById('item_id');
+                const priceInput = document.getElementById('price');
+                const quantityInput = document.getElementById('quantity');
+                const totalInput = document.getElementById('total');
+
+                function updatePriceAndTotal() {
+                    const selectedOption = itemSelect.options[itemSelect.selectedIndex];
+                    const price = selectedOption.dataset.price || 0;
+                    const quantity = quantityInput.value || 1;
+
+                    priceInput.value = price;
+                    totalInput.value = price * quantity;
+                }
+
+                itemSelect.addEventListener('change', updatePriceAndTotal);
+                quantityInput.addEventListener('input', updatePriceAndTotal);
+            </script>
+
+
+
+            <button type="submit">Add Purchase</button>
+            <br>
+            <a href="/purchase" class="back-btn">← Back</a>
         </form>
     </div>
 </body>

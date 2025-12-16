@@ -1,11 +1,10 @@
 <!DOCTYPE html>
-<html>
+<html lang="en">
 
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Edit Category</title>
-
+    <title>Add New Category</title>
     <style>
         body {
             margin: 0;
@@ -45,7 +44,7 @@
         }
 
         /* Page Title */
-        h2 {
+        h1 {
             text-align: center;
             margin-top: 40px;
             margin-bottom: 30px;
@@ -103,14 +102,8 @@
             resize: none;
         }
 
-        .button-group {
-            display: flex;
-            gap: 15px;
-            margin-top: 30px;
-        }
-
         button {
-            flex: 1;
+            margin-top: 30px;
             padding: 12px 28px;
             background: #007bff;
             color: white;
@@ -126,24 +119,6 @@
             background: #0056b3;
         }
 
-        .cancel-btn {
-            background: #6c757d;
-            text-decoration: none;
-            padding: 12px 28px;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            border-radius: 6px;
-            color: white;
-            font-weight: 600;
-            font-size: 16px;
-            transition: 0.3s;
-        }
-
-        .cancel-btn:hover {
-            background: #5a6268;
-        }
-
         .error {
             color: #dc3545;
             font-size: 14px;
@@ -154,6 +129,7 @@
 
         .back-btn {
             display: inline-block;
+            text-align: center;
             margin-bottom: 20px;
             padding: 10px 18px;
             background: #6c757d;
@@ -169,51 +145,90 @@
         }
     </style>
 </head>
+<!-- i                have   -->
+<!--  {{ session('user_id') }} -->
+<!-- {{ session('user_name') }} -->
 
 <body>
     <!-- Navbar -->
     <div class="navbar">
         <div class="username">Welcome {{ session('user_name') }}</div>
-        <div>
-            <a href="/category">Back</a>
-            <a href="/logout">Logout</a>
-        </div>
+        <a href="/logout">Logout</a>
     </div>
 
     <!-- Page Title -->
-    <h2>Edit Category</h2>
+    <h1>Add New Sale</h1>
 
-    <!-- Form Container -->
     <div class="form-container">
-        <form action="{{ url('/category/update/'.$category->category_id) }}" method="POST">
+        <form action="/sale/update/{{ $sale->sales_id }}" method="post">
             @csrf
 
-            <label for="category_name">Category Name</label>
-            <input type="text" id="category_name" name="category_name"
-                value="{{ old('category_name', $category->category_name) }}" @if(!$editable) disabled @endif required>
-            @error('category_name')
-            <span class="error">{{ $message }}</span>
-            @enderror
+            <label for="purchase_id">Select Purchase:</label>
+            <select name="purchase_id" id="purchase_id" @if(!$editable) disabled @endif required>
+                <option value="">-- Select Purchase --</option>
+                @foreach($purchases as $purchase)
+                <option value="{{ $purchase->purchase_id }}"
+                    data-price="{{ $purchase->item->prize }}"
+                    data-quantity="{{ $purchase->quantity }}"
+                    {{ $purchase->purchase_id == $sale->purchase_id ? 'selected' : '' }}>
+                    {{ $purchase->item->item_name }} (Available: {{ $purchase->quantity }})
+                </option>
+                @endforeach
+            </select>
+            <br><br>
 
-            <label for="description">Description</label>
-            <textarea id="description" name="description" @if(!$editable) disabled @endif
-                required>{{ old('description', $category->category_description) }}</textarea>
-            @error('description')
-            <span class="error">{{ $message }}</span>
-            @enderror
+            <label for="price">Item Price:</label>
+            <input type="number" id="price" name="price" readonly>
+            <br><br>
+
+            <label for="quantity">Quantity:</label>
+            <input type="number" name="quantity" id="quantity" value="{{ $sale->quantity }}" @if(!$editable) disabled @endif required>
+            <br><br>
+
+            <label for="total">Total Price (10% discount applied):</label>
+            <input type="number" name="total" id="total" readonly>
+            <br><br>
             @if($editable)
-            <div class="button-group">
-                <button type="submit">UPDATE</button>
-                <a href="/category" class="cancel-btn">CANCEL</a>
-            </div>
+            <button type="submit">EDIT</button>
+            <br>
+            <a href="/sales" class="back-btn">← Back</a>
             @else
-            <div class="button-group">
-                <a href="/category" class="cancel-btn">BACK</a>
-            </div>
+            <br>
+            <a href="/sales" class="back-btn">← Back</a>
             @endif
-
         </form>
     </div>
+
+    <script>
+        const purchaseSelect = document.getElementById('purchase_id');
+        const priceInput = document.getElementById('price');
+        const quantityInput = document.getElementById('quantity');
+        const totalInput = document.getElementById('total');
+
+        function updatePriceAndTotal() {
+            const selectedOption = purchaseSelect.options[purchaseSelect.selectedIndex];
+            const price = parseFloat(selectedOption.dataset.price || 0);
+            const maxQuantity = parseInt(selectedOption.dataset.quantity || 1);
+
+            // Limit quantity to available quantity
+            let quantity = parseInt(quantityInput.value);
+            if (quantity > maxQuantity) quantity = maxQuantity;
+            quantityInput.value = quantity;
+            quantityInput.max = maxQuantity;
+
+            priceInput.value = price;
+
+            // Apply 10% discount
+            let total = price * quantity;
+            total = total - (0.10 * total);
+            totalInput.value = total.toFixed(2);
+        }
+
+        purchaseSelect.addEventListener('change', updatePriceAndTotal);
+        quantityInput.addEventListener('input', updatePriceAndTotal);
+        updatePriceAndTotal()
+    </script>
+
 </body>
 
 </html>

@@ -149,10 +149,10 @@
     </div>
 
     <div class="container">
-        <h1>Categories</h1>
+        <h1>Sales</h1>
         <div class="header-section">
             <a href="/home">← Back</a>
-            <a href="/add_category">+ ADD NEW CATEGORY</a>
+            <a href="/add_sale">+ ADD NEW purchase</a>
         </div>
 
         @if(session('success'))
@@ -164,38 +164,41 @@
         <table>
             <thead>
                 <tr>
-                    <td>Category Name</td>
-                    <td>Category Description</td>
+                    <td>item Name</td>
+                    <td>price</td>
+                    <td>quantity</td>
+                    <td>total</td>
                     <td>edit</td>
                     <td>delete</td>
                     <td>view</td>
                 </tr>
             </thead>
             <tbody>
-                @forelse($categories as $cat)
+                @forelse($sale as $sa)
                 <tr>
-                    <td>{{ $cat->category_name }}</td>
-                    <td>{{ $cat->category_description }}</td>
+                    <td>{{ $sa->purchase->item->item_name }}</td>
+                    <td>{{ $sa->purchase->item->prize }}</td>
+                    <td>{{ $sa->quantity }}</td>
+                    <td>{{ $sa->total_price}}</td>
                     <td>
-                        <a href="{{ url('/category/edit/' . $cat->category_id) }}?edit=1">
+                        <a href="/sale/edit/{{ $sa->sales_id }}?edit=1" title="Edit">
                             ✏️
                         </a>
                     </td>
                     <td>
-                        <a href="/category/delete/{{ $cat->category_id }}" onclick="return confirm('Are you sure you want to delete this category?')">
+                        <a href="/sale/delete/{{ $sa->sales_id }}"
+                            onclick="return confirm('Are you sure you want to delete this sale?')">
                             🗑️
                         </a>
                     </td>
                     <td>
-                        <a href="/category/edit/{{ $cat->category_id }}" title="Edit">
-
+                        <a href="/sale/edit/{{ $sa->sales_id }}" title="Edit">
                             <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24"
                                 viewBox="0 0 24 24" fill="none" stroke="currentColor"
                                 stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
                                 <path d="M1 12s4-8 11-8 11 8 11 8-4 8-11 8-11-8-11-8z" />
                                 <circle cx="12" cy="12" r="3" />
                             </svg>
-
                         </a>
                     </td>
                 </tr>

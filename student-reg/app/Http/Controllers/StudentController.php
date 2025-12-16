@@ -2,7 +2,6 @@
 
 namespace App\Http\Controllers;
 
-
 use Illuminate\Http\Request;
 
 use Illuminate\Support\Facades\Session;
@@ -419,6 +418,7 @@ class StudentController extends Controller
         //     $path = $file->storeAs('temp', $file->getClientOriginalName());
         //     Session::put('file_path', storage_path('app/' . $path));
         // }
+
         if ($request->hasFile('uploadfile') && $request->file('uploadfile')->isValid()) {
             $file = $request->file('uploadfile');
 
@@ -436,8 +436,6 @@ class StudentController extends Controller
             // Store the absolute path in session
             Session::put('uploaded_file', $dir . DIRECTORY_SEPARATOR . $filename);
         }
-
-
 
         // Generate OTP
         $otp = rand(1000, 9999);
@@ -493,8 +491,6 @@ class StudentController extends Controller
                 $mail->setFrom(Session::get('from_email'), 'Verified User');
                 $mail->addAddress(Session::get('to_email'));
 
-
-
                 $fullPath = Session::get('uploaded_file');
 
                 if (!$fullPath || !file_exists($fullPath)) {
@@ -521,4 +517,6 @@ class StudentController extends Controller
             return "Invalid OTP!";
         }
     }
+
+
 }

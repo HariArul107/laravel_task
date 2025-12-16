@@ -38,8 +38,9 @@ Route::get('/email', [StudentController::class, 'emailform']);
 Route::post('/send', [StudentController::class, 'sendotp']);
 Route::post('/verify-otp', [StudentController::class, 'verifyOtp']);
 
+// Location dependent dropdown routes
 Route::get('/locations', [LocationController::class, 'index'])->name('locations.index');
 Route::get('/get-states', [LocationController::class, 'getStates'])->name('locations.getStates');
 Route::get('/get-cities', [LocationController::class, 'getCities'])->name('locations.getCities');
 
-?>
+?>    

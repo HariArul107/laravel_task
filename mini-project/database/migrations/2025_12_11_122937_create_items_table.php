@@ -34,9 +34,7 @@ return new class extends Migration
                 ->onDelete('cascade')
                 ->onUpdate('cascade');
 
-
-
-
+                
             $table->unique(['category_name', 'item_name', 'user_id'], 'item_category_unique');
         });
     }

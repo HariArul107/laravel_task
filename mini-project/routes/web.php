@@ -3,8 +3,10 @@
 use Illuminate\Support\Facades\Route;
 use  App\Http\Controllers\authentication;
 use App\Http\Controllers\ListController;
+use App\Http\Controllers\PurchaseController;
 
-Route::get('/log-in', [authentication::class, 'login']);
+
+Route::get('/', [authentication::class, 'login']);
 Route::post('/loginhome', [authentication::class, 'loginhome']);
 
 Route::get('/register', [authentication::class, 'register']);
@@ -34,3 +36,24 @@ Route::post('/item/update/{id}', [ListController::class, 'updateitem']);
 
 Route::get('/item/delete/{id}', [ListController::class, 'deleteitem']);
 
+
+Route::get('/purchase', [PurchaseController::class, 'showpurchase']);
+Route::get('/add_purchase', [PurchaseController::class, 'showaformpurchase']);
+Route::post('/database-purchase', [PurchaseController::class, 'addpurchase']);
+
+Route::get('/purchase/edit/{id}', [PurchaseController::class, 'edit']);
+Route::post('/purchase/update/{id}', [PurchaseController::class, 'update']);
+
+Route::get('/purchase/delete/{id}', [PurchaseController::class, 'delete']);
+
+
+
+Route::get('/sales', [PurchaseController::class, 'showsale']);
+Route::get('/add_sale', [PurchaseController::class, 'showaformsale']);
+Route::post('/database-sale', [PurchaseController::class, 'addsale']);
+
+
+Route::get('/sale/edit/{id}', [PurchaseController::class, 'editsale']);
+Route::post('/sale/update/{id}', [PurchaseController::class, 'updatesale']);
+
+Route::get('/sale/delete/{id}', [PurchaseController::class, 'deletesale']);

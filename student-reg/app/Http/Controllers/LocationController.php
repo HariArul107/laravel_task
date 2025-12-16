@@ -15,7 +15,7 @@ class LocationController extends Controller
     private $states = [
         1 => [1 => 'Maharashtra', 2 => 'Karnataka'],
         2 => [3 => 'California', 4 => 'Texas']
-    ];
+    ];                   
 
     private $cities = [
         1 => [1 => 'Mumbai', 2 => 'Pune'],

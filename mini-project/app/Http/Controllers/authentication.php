@@ -11,6 +11,9 @@ class authentication extends Controller
 {
     public function login()
     {
+        if (Session::has('user_name')) {
+            return redirect('/home');
+        }
         return view('log-in');
     }
 
@@ -70,7 +73,7 @@ class authentication extends Controller
     public function home()
     {
         if (!Session::has('user_name')) {
-            return redirect('/log-in');
+            return redirect('/');
         }
         return view('home');
     }
@@ -78,6 +81,6 @@ class authentication extends Controller
     public function logout()
     {
         Session::flush();
-        return redirect('/log-in');
+        return redirect('/');
     }
 }
