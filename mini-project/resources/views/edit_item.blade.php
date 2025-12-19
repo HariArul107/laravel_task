@@ -177,11 +177,11 @@
 
             <label for="item">Item Name</label>
             <input type="text" id="item" name="item_name" value="{{ old('item_name', $item->item_name) }}"
-                @if(!$editable) disabled @endif required>
+                @if(!$editable) readonly @endif required>
 
             <label for="prize">Prize</label>
             <input type="number" id="prize" name="prize" value="{{ old('prize', $item->prize) }}"
-                @if(!$editable) disabled @endif required min="1" max="999999">
+                @if(!$editable) readonly @endif required min="1" max="999999">
             @if($editable)
             <button type="submit">EDIT ITEM</button>
             <br>

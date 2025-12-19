@@ -6,60 +6,64 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Add New Category</title>
     <style>
+        /* General Body */
         body {
             margin: 0;
-            font-family: Arial, sans-serif;
-            background: #f4f6f9;
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background: #f0f2f5;
+            color: #333;
         }
 
         /* Navbar */
         .navbar {
-            background: #007bff;
-            color: white;
-            padding: 15px 25px;
+            background: #1e3a8a;
+            color: #fff;
+            padding: 15px 30px;
             display: flex;
             justify-content: space-between;
             align-items: center;
-            box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+            position: sticky;
+            top: 0;
+            z-index: 1000;
         }
 
         .navbar .username {
-            font-size: 22px;
-            font-weight: bold;
+            font-size: 20px;
+            font-weight: 600;
         }
 
         .navbar a {
-            color: white;
+            color: #fff;
             text-decoration: none;
-            font-size: 18px;
-            padding: 8px 15px;
-            background: #0056b3;
-            border-radius: 5px;
+            padding: 8px 16px;
+            background: #2563eb;
+            border-radius: 6px;
+            font-size: 16px;
             transition: 0.3s;
-            margin-left: 10px;
         }
 
         .navbar a:hover {
-            background: #003f87;
+            background: #1d4ed8;
         }
 
         /* Page Title */
         h1 {
             text-align: center;
-            margin-top: 40px;
-            margin-bottom: 30px;
-            font-size: 28px;
-            color: #333;
+            margin: 40px 0 30px 0;
+            font-size: 32px;
+            font-weight: 600;
+            color: #1e293b;
         }
 
         /* Form Container */
         .form-container {
-            max-width: 600px;
-            margin: 0 auto 40px auto;
-            background: white;
-            padding: 40px 30px;
+            max-width: 650px;
+            margin: 0 auto 50px auto;
+            background: #fff;
+            padding: 40px 35px;
             border-radius: 12px;
-            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+            box-shadow: 0 8px 20px rgba(0, 0, 0, 0.08);
         }
 
         form {
@@ -68,11 +72,10 @@
         }
 
         label {
-            color: #333;
-            font-weight: 600;
-            margin-top: 20px;
+            font-weight: 500;
             margin-bottom: 8px;
-            font-size: 16px;
+            font-size: 15px;
+            margin-top: 20px;
         }
 
         label:first-of-type {
@@ -80,70 +83,98 @@
         }
 
         input[type="text"],
+        input[type="number"],
+        input[type="date"],
+        select,
         textarea {
-            padding: 12px 15px;
-            border: 1px solid #ddd;
-            border-radius: 6px;
-            font-family: Arial, sans-serif;
+            padding: 12px 14px;
+            border: 1px solid #cbd5e1;
+            border-radius: 8px;
             font-size: 15px;
-            transition: 0.3s;
-            color: #333;
+            transition: all 0.3s ease;
+            width: 100%;
+            box-sizing: border-box;
         }
 
         input[type="text"]:focus,
+        input[type="number"]:focus,
+        input[type="date"]:focus,
+        select:focus,
         textarea:focus {
             outline: none;
-            border-color: #007bff;
-            box-shadow: 0 0 5px rgba(0, 123, 255, 0.3);
+            border-color: #2563eb;
+            box-shadow: 0 0 6px rgba(37, 99, 235, 0.3);
         }
 
         textarea {
             min-height: 120px;
-            resize: none;
+            resize: vertical;
         }
 
         button {
-            margin-top: 30px;
-            padding: 12px 28px;
-            background: #007bff;
-            color: white;
-            border: none;
-            border-radius: 6px;
-            font-weight: 600;
+            margin-top: 25px;
+            padding: 12px 20px;
+            background: #2563eb;
+            color: #fff;
             font-size: 16px;
+            font-weight: 600;
+            border: none;
+            border-radius: 8px;
             cursor: pointer;
-            transition: 0.3s;
+            transition: 0.3s ease;
         }
 
         button:hover {
-            background: #0056b3;
+            background: #1d4ed8;
         }
 
         .error {
-            color: #dc3545;
+            color: #dc2626;
             font-size: 14px;
-            font-weight: 600;
             margin-top: 5px;
-            display: block;
         }
 
         .back-btn {
             display: inline-block;
-            text-align: center;
-            margin-bottom: 20px;
+            margin-top: 20px;
             padding: 10px 18px;
-            background: #6c757d;
-            color: white;
+            background: #6b7280;
+            color: #fff;
             text-decoration: none;
-            border-radius: 6px;
-            font-size: 16px;
-            transition: 0.3s;
+            border-radius: 8px;
+            font-size: 15px;
+            transition: 0.3s ease;
         }
 
         .back-btn:hover {
-            background: #5a6268;
+            background: #4b5563;
+        }
+
+        /* Disabled inputs styling */
+        input[disabled],
+        select[disabled],
+        textarea[disabled] {
+            background: #e5e7eb;
+            cursor: not-allowed;
+            color: #6b7280;
+        }
+
+        /* Responsive */
+        @media (max-width: 768px) {
+            .form-container {
+                padding: 30px 20px;
+            }
+
+            h1 {
+                font-size: 28px;
+            }
+
+            .navbar .username {
+                font-size: 18px;
+            }
         }
     </style>
+
 </head>
 <!-- i                have   -->
 <!--  {{ session('user_id') }} -->
@@ -157,11 +188,24 @@
     </div>
 
     <!-- Page Title -->
-    <h1>Add New Sale</h1>
+    <h1> Sale</h1>
 
     <div class="form-container">
         <form action="/sale/update/{{ $sale->sales_id }}" method="post">
             @csrf
+
+            <label for="customer_name">customer name</label>
+            <input type="text" id="customer_name" name="customer_name" value="{{ $sale->customer_name }}" @if(!$editable) readonly @endif required>
+            <br><br>
+
+            <label for="sale_date">sale_date</label>
+            <input type="date" id="sale_date" name="sale_date" value="{{ $sale->sale_date }}" @if(!$editable) readonly @endif required>
+            <br><br>
+
+            <label for="address">Address:</label>
+            <textarea id="address" name="address" @if(!$editable) readonly @endif required> {{ $sale->address }}</textarea>
+            <br><br>
+
 
             <label for="purchase_id">Select Purchase:</label>
             <select name="purchase_id" id="purchase_id" @if(!$editable) disabled @endif required>
@@ -182,12 +226,17 @@
             <br><br>
 
             <label for="quantity">Quantity:</label>
-            <input type="number" name="quantity" id="quantity" value="{{ $sale->quantity }}" @if(!$editable) disabled @endif required>
+            <input type="number" name="quantity" id="quantity" value="{{ $sale->quantity }}" @if(!$editable) readonly @endif required>
             <br><br>
 
-            <label for="total">Total Price (10% discount applied):</label>
+            <label for="discount">Discount Percentage:</label>
+            <input type="number" id="discount" name="discount" value="{{ $sale->discount }}" min="1" max="99" @if(!$editable) readonly @endif required>
+            <br><br>
+
+            <label for="total">Total Price ( discount applied):</label>
             <input type="number" name="total" id="total" readonly>
             <br><br>
+
             @if($editable)
             <button type="submit">EDIT</button>
             <br>
@@ -217,16 +266,20 @@
             quantityInput.max = maxQuantity;
 
             priceInput.value = price;
+            let discount = parseFloat(document.getElementById('discount').value) || 0;
+
 
             // Apply 10% discount
             let total = price * quantity;
-            total = total - (0.10 * total);
+            total = total - (discount / 100 * total);
             totalInput.value = total.toFixed(2);
         }
 
         purchaseSelect.addEventListener('change', updatePriceAndTotal);
         quantityInput.addEventListener('input', updatePriceAndTotal);
-        updatePriceAndTotal()
+        document.getElementById('discount').addEventListener('input', updatePriceAndTotal);
+
+        updatePriceAndTotal();
     </script>
 
 </body>

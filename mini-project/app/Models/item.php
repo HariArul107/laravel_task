@@ -16,4 +16,9 @@ class item extends Model
         'user_id',
         'category_id',
     ];
+
+    public function category()
+    {
+        return $this->belongsTo(Category::class, 'category_id', 'category_id');
+    }
 }

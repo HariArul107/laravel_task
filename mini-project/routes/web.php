@@ -57,3 +57,6 @@ Route::get('/sale/edit/{id}', [PurchaseController::class, 'editsale']);
 Route::post('/sale/update/{id}', [PurchaseController::class, 'updatesale']);
 
 Route::get('/sale/delete/{id}', [PurchaseController::class, 'deletesale']);
+
+
+Route::get('/report', [PurchaseController::class, 'showreport']);

@@ -13,8 +13,13 @@ return new class extends Migration
     {
         Schema::create('sales', function (Blueprint $table) {
             $table->id('sales_id');
-            $table->unsignedBigInteger('purchase_id'); 
-            $table->unsignedBigInteger('user_id'); 
+            $table->string('bill_no')->unique()->nullable();
+            $table->string('customer_name');
+            $table->date('sale_date');
+            $table->string('address');
+            $table->unsignedBigInteger('discount');
+            $table->unsignedBigInteger('purchase_id');
+            $table->unsignedBigInteger('user_id');
             $table->integer('quantity')->default(1);
             $table->decimal('total_price', 10, 2);
             $table->timestamps();

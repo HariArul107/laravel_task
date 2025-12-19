@@ -10,7 +10,12 @@ class sale extends Model
     protected $table = 'sales';
     protected $primaryKey = 'sales_id'; // custom primary key
     protected $fillable = [
+        'bill_no',
         'purchase_id',
+        'customer_name',
+        'sale_date',
+        'address',
+        'discount',
         'user_id',
         'quantity',
         'total_price',

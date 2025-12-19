@@ -14,8 +14,12 @@ return new class extends Migration
         Schema::create('purchase', function (Blueprint $table) {
 
             $table->id('purchase_id'); // primary key
+            $table->string('supplier_name');
+            $table->date('purchase_date');
+            $table->string('address');
             $table->unsignedBigInteger('item_id'); // foreign key to items
             $table->unsignedBigInteger('user_id'); // user who purchased
+             $table->integer('total_quantity');
             $table->integer('quantity')->default(1); // quantity purchased
             $table->decimal('total_price', 10, 2); // total price for the purchase
             $table->timestamps();

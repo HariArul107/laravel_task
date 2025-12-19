@@ -9,39 +9,40 @@
     <style>
         body {
             margin: 0;
-            font-family: Arial, sans-serif;
-            background: #f4f6f9;
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background: #f0f2f5;
+            color: #333;
         }
 
         /* Navbar */
         .navbar {
-            background: #007bff;
-            color: white;
-            padding: 15px 25px;
+            background: #1e3a8a;
+            color: #fff;
+            padding: 15px 30px;
             display: flex;
             justify-content: space-between;
             align-items: center;
-            box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
+            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
         }
 
         .navbar .username {
-            font-size: 22px;
-            font-weight: bold;
+            font-size: 20px;
+            font-weight: 600;
         }
 
         .navbar a {
-            color: white;
+            color: #fff;
             text-decoration: none;
-            font-size: 18px;
-            padding: 8px 15px;
-            background: #0056b3;
-            border-radius: 5px;
+            padding: 8px 16px;
+            background: #2563eb;
+            border-radius: 6px;
+            font-size: 16px;
             transition: 0.3s;
             margin-left: 10px;
         }
 
         .navbar a:hover {
-            background: #003f87;
+            background: #1d4ed8;
         }
 
         /* Page Title */
@@ -50,17 +51,18 @@
             margin-top: 40px;
             margin-bottom: 30px;
             font-size: 28px;
-            color: #333;
+            font-weight: 600;
+            color: #1e293b;
         }
 
         /* Form Container */
         .form-container {
             max-width: 600px;
-            margin: 0 auto 40px auto;
-            background: white;
-            padding: 40px 30px;
+            margin: 0 auto 50px auto;
+            background: #fff;
+            padding: 40px 35px;
             border-radius: 12px;
-            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+            box-shadow: 0 8px 20px rgba(0, 0, 0, 0.08);
         }
 
         form {
@@ -69,11 +71,10 @@
         }
 
         label {
-            color: #333;
-            font-weight: 600;
-            margin-top: 20px;
+            font-weight: 500;
             margin-bottom: 8px;
-            font-size: 16px;
+            font-size: 15px;
+            margin-top: 20px;
         }
 
         label:first-of-type {
@@ -83,63 +84,61 @@
         input[type="text"],
         input[type="number"],
         select {
-            padding: 12px 15px;
-            border: 1px solid #ddd;
-            border-radius: 6px;
-            font-family: Arial, sans-serif;
+            padding: 12px 14px;
+            border: 1px solid #cbd5e1;
+            border-radius: 8px;
             font-size: 15px;
-            transition: 0.3s;
-            color: #333;
+            transition: all 0.3s ease;
+            width: 100%;
+            box-sizing: border-box;
         }
 
         input[type="text"]:focus,
         input[type="number"]:focus,
         select:focus {
             outline: none;
-            border-color: #007bff;
-            box-shadow: 0 0 5px rgba(0, 123, 255, 0.3);
+            border-color: #2563eb;
+            box-shadow: 0 0 6px rgba(37, 99, 235, 0.3);
         }
 
         button {
             margin-top: 30px;
-            padding: 12px 28px;
-            background: #007bff;
-            color: white;
-            border: none;
-            border-radius: 6px;
-            font-weight: 600;
+            padding: 12px 20px;
+            background: #2563eb;
+            color: #fff;
             font-size: 16px;
+            font-weight: 600;
+            border: none;
+            border-radius: 8px;
             cursor: pointer;
-            transition: 0.3s;
+            transition: 0.3s ease;
         }
 
         button:hover {
-            background: #0056b3;
-        }
-
-        .error {
-            color: #dc3545;
-            font-size: 14px;
-            font-weight: 600;
-            margin-top: 5px;
-            display: block;
+            background: #1d4ed8;
         }
 
         .back-btn {
-            text-align: center;
             display: inline-block;
-            margin-bottom: 20px;
+            margin-top: 15px;
             padding: 10px 18px;
-            background: #6c757d;
-            color: white;
+            background: #6b7280;
+            color: #fff;
             text-decoration: none;
-            border-radius: 6px;
+            border-radius: 8px;
             font-size: 16px;
-            transition: 0.3s;
+            text-align: center;
+            transition: 0.3s ease;
         }
 
         .back-btn:hover {
-            background: #5a6268;
+            background: #4b5563;
+        }
+
+        .error {
+            color: #dc2626;
+            font-size: 14px;
+            margin-top: 5px;
         }
     </style>
 </head>
@@ -161,9 +160,10 @@
     <div class="form-container">
         <form action="/database_item" method="post">
             @csrf
+
             <label for="name">Select Category</label>
             <select id="name" name="c_name" required>
-                <option value="disabled">-- Select Category --</option>
+                <option value="">-- Select Category --</option>
                 @forelse($categories as $cat)
                 <option value="{{ $cat->category_name }}">{{ $cat->category_name }}</option>
                 @empty
@@ -181,11 +181,8 @@
             <input type="number" id="prize" name="prize" required min="1" max="999999">
 
             <button type="submit">ADD ITEM</button>
-            <br>
             <a href="/item" class="back-btn">Back</a>
-
         </form>
     </div>
 </body>
-
 </html>

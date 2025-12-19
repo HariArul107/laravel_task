@@ -144,12 +144,12 @@ class ListController extends Controller
 
         if ($itemCount > 0) {
             return redirect()->back()
-                ->with('success', 'Cannot delete this category because items are associated with it.');
+                ->with('error', 'Cannot delete this category because items are associated with it.');
         }
 
         $category->delete();
 
-        return redirect('/category')->with('success', 'Category Deleted Successfully!');
+        return redirect('/category')->with('error', 'Category Deleted Successfully!');
     }
 
     public function edititem(Request $request, $id)
@@ -215,10 +215,10 @@ class ListController extends Controller
 
         if ($purchaseCount > 0) {
             return redirect()->back()
-                ->with('success', 'Cannot delete this item because purchase are associated with it.');
+                ->with('error', 'Cannot delete this item because purchase are associated with it.');
         }
 
         $items->delete();
-        return redirect('/item')->with('success', 'item Deleted Successfully!');
+        return redirect('/item')->with('error', 'item Deleted Successfully!');
     }
 }

@@ -46,7 +46,7 @@ class authentication extends Controller
             'password' => bcrypt($validated['password']), // Hash the password
         ]);
         // For demonstration, we'll just return a success message
-        return redirect('/log-in')->with('success', 'Registration successful! Please log in.');
+        return redirect('/')->with('success', 'Registration successful! Please log in.');
     }
 
 
